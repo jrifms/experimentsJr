@@ -1,19 +1,33 @@
 #include "wifiJr.h"
 
-WiFiJr::WiFiJr(const char* ssid, const char* password) : ssid(ssid), password(password) {}
+WiFiJr::WiFiJr(const char* ssid, const char* password)
+    : ssid(ssid), password(password) {
+}
 
-void WiFiJr::connect() {
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Trying to connect to WiFi...");
-  }
+bool WiFiJr::connect() {
+
+    WiFi.begin(ssid, password);
+
+    unsigned long startTime = millis();
+
+    while (WiFi.status() != WL_CONNECTED) {
+
+        if (millis() - startTime >= 15000) {
+            return false;
+        }
+
+        delay(500);
+    }
+
+    return true;
 }
 
 bool WiFiJr::isConnected() {
-  return WiFi.status() == WL_CONNECTED;
+
+    return WiFi.status() == WL_CONNECTED;
 }
 
 String WiFiJr::getIPAddress() {
-  return WiFi.localIP().toString();
+
+    return WiFi.localIP().toString();
 }

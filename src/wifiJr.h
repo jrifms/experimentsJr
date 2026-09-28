@@ -1,36 +1,46 @@
 /*
   wifiJr.h - Library for create wifi connection.
-  Created by Junior Silva Souza, Setember 9, 2026.
+  Created by Junior Silva Souza, September 9, 2026.
   Released into the public domain.
 */
 
 /**
- * @brief A simple wifi connection class for Arduino.
- * This class allows you to create a wifi connection that can handle network requests.
- * It uses the WiFi library to manage the wifi functionality.
- * @example
- *
- * #include "wifiJr.h"
- *
- * WiFiJr wifi("yourSSID", "yourPassword");
- *
- * void setup() {
- *   wifi.connect();
- * }
- *
+ * @brief A simple WiFi connection class for Arduino.
  */
+
 #ifndef WIFI_JR_H
 #define WIFI_JR_H
-#include <WiFi.h>
+
+#if defined(ESP8266)
+
+    #include <ESP8266WiFi.h>
+
+#elif defined(ESP32)
+
+    #include <WiFi.h>
+
+#else
+
+    #error "Placa não suportada"
+
+#endif
 
 class WiFiJr {
+
   public:
+
     WiFiJr(const char* ssid, const char* password);
-    void connect();
+
+    bool connect();
+
     bool isConnected();
+
     String getIPAddress();
 
   private:
+
     const char* ssid;
     const char* password;
 };
+
+#endif
