@@ -4,8 +4,6 @@
 #if defined(ESP8266)
 
     #include <FS.h>
-    #include <LittleFS.h>
-    #include <SPIFFS.h>
 
 #elif defined(ESP32)
 
@@ -20,8 +18,7 @@
 
 
 class FilesJr {
-
-  public:
+public:
 
     FilesJr();
 
@@ -47,7 +44,7 @@ class FilesJr {
 
     bool isFileSystemMounted();
 
-  private:
+private:
 
     bool filesystem;
 };

@@ -3,16 +3,15 @@
 
 FilesJr::FilesJr()
 {
-    #if defined(ESP8266)
+#if defined(ESP8266)
 
-        this->filesystem = SPIFFS.begin();
+    this->filesystem = SPIFFS.begin();
 
-    #elif defined(ESP32)
+#elif defined(ESP32)
 
-        this->filesystem = SPIFFS.begin(true);
+    this->filesystem = SPIFFS.begin(true);
 
-    #endif
-
+#endif
 
     if (!this->filesystem) {
 
@@ -25,7 +24,6 @@ FilesJr::FilesJr()
         Serial.println(
             "SPIFFS mounted successfully"
         );
-
     }
 }
 
@@ -57,7 +55,6 @@ bool FilesJr::createFile(
     }
 
     file.print(content);
-
     file.close();
 
     return true;
