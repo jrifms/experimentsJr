@@ -39,7 +39,7 @@ void ServerWebJr::handleClient()
 }
 
 
-ServerWebJr& WebServer::getServer()
+WebServer& ServerWebJr::getServer()
 {
     return server;
 }
