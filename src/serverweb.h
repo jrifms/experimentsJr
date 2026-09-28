@@ -19,12 +19,12 @@
 #if defined(ESP8266)
 
     #include <ESP8266WebServer.h>
-    using WebServerJr = ESP8266WebServer;
+    using WebServer = ESP8266WebServer;
 
 #elif defined(ESP32)
 
     #include <WebServer.h>
-    using WebServerJr = WebServer;
+    using WebServer = WebServer;
 
 #else
 
@@ -52,7 +52,7 @@ class ServerWebJr {
 
     void handleClient();
 
-    ServerWebJr& getServer();
+    WebServer & getServer();
 
   private:
 
@@ -61,7 +61,7 @@ class ServerWebJr {
     const char* ssid;
     const char* password;
 
-    ServerWebJr server;
+    WebServer server;
 };
 
 #endif
