@@ -43,7 +43,15 @@ bool FilesJr::createFile(
     const char* content
 )
 {
+#if defined(ESP8266)
+
+    File file = SPIFFS.open(path, "w");
+
+#elif defined(ESP32)
+
     File file = SPIFFS.open(path, FILE_WRITE);
+
+#endif
 
     if (!file) {
 
@@ -66,7 +74,15 @@ bool FilesJr::readFile(
     String& content
 )
 {
+#if defined(ESP8266)
+
+    File file = SPIFFS.open(path, "r");
+
+#elif defined(ESP32)
+
     File file = SPIFFS.open(path, FILE_READ);
+
+#endif
 
     if (!file) {
 
@@ -89,7 +105,15 @@ void FilesJr::listFiles()
 {
     Serial.println("Listing files:");
 
+#if defined(ESP8266)
+
+    File root = SPIFFS.open("/", "r");
+
+#elif defined(ESP32)
+
     File root = SPIFFS.open("/");
+
+#endif
 
     if (!root) {
 
