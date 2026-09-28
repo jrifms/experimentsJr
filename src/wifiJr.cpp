@@ -34,6 +34,7 @@ String WiFiJr::getIPAddress() {
 
 bool WiFiJr::createAccessPoint()
 {
+    delay(1000);
     WiFi.mode(WIFI_AP);
     return WiFi.softAP( ssid, password);
 }
