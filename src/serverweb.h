@@ -33,11 +33,11 @@
 #endif
 
 
-class ServerJr {
+class ServerWebJr {
 
   public:
 
-    ServerJr(
+    ServerWebJr(
       int port,
       const char* ssid,
       const char* password
@@ -52,7 +52,7 @@ class ServerJr {
 
     void handleClient();
 
-    WebServerJr& getServer();
+    ServerWebJr& getServer();
 
   private:
 
@@ -61,7 +61,7 @@ class ServerJr {
     const char* ssid;
     const char* password;
 
-    WebServerJr server;
+    ServerWebJr server;
 };
 
 #endif
