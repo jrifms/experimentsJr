@@ -35,6 +35,10 @@ class WiFiJr {
 
     bool isConnected();
 
+    bool createAccessPoint();
+
+    String getAccessPointIP();
+
     String getIPAddress();
 
   private:

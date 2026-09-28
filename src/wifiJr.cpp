@@ -31,3 +31,13 @@ String WiFiJr::getIPAddress() {
 
     return WiFi.localIP().toString();
 }
+
+bool WiFiJr::createAccessPoint()
+{
+    return WiFi.softAP( ssid, password);
+}
+
+String WiFiJr::getAccessPointIP()
+{
+    return WiFi.softAPIP().toString();
+}
