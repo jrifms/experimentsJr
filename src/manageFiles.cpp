@@ -11,7 +11,7 @@ FilesJr::FilesJr() {
     }
 }
  
-FilesJr::deleteFile(const char* path) {
+FilesJr::deleteFile(char* path) {
     if (SPIFFS.exists(path)) {
         SPIFFS.remove(path);
         return true;
@@ -19,7 +19,7 @@ FilesJr::deleteFile(const char* path) {
     return false;
 }
 
-FilesJr::createFile(const char* content) {
+FilesJr::createFile(char* content) {
     File file = SPIFFS.open(path, FILE_WRITE);
     if (!file) {
         Serial.println("Failed to create file");
@@ -56,6 +56,6 @@ FilesJr::isFileSystemMounted() {
     return this->filesytem;
 }
 
-FilesJr::fileExists(const char* path) {
+FilesJr::fileExists(char* path) {
     return SPIFFS.exists(path);
 }

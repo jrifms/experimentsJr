@@ -29,14 +29,14 @@ class FilesJr {
   public:
     FilesJr();
     void listFiles();
-    bool createFile(const char* content);
+    bool createFile(char* content);
     bool readFile(String& content);
-    bool deleteFile(const char* path);
-    bool fileExists(const char* path);
+    bool deleteFile(char* path);
+    bool fileExists(char* path);
     bool isFileSystemMounted();
 
     private:
-        const char* path;
-        const bool filesytem;
+        char* path;
+        bool filesytem;
 };
 #endif
