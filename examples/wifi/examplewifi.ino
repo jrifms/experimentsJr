@@ -1,8 +1,25 @@
+
 #include "wifiJr.h"
- 
- WiFiJr wifi("yourSSID", "yourPassword");
- 
- void setup() {
-     wifi.connect();
- }
- 
+
+WiFiJr wifi("SSID", "PASSWORD");
+
+void setup() {
+
+    Serial.begin(115200);
+
+    if (wifi.connect()) {
+
+        Serial.println("WiFi conectado!");
+        Serial.println(wifi.getIPAddress());
+
+    } else {
+
+        Serial.println("Não foi possível conectar ao WiFi.");
+
+    }
+}
+
+void loop() {
+	Serial.println(wifi.getIPAddress());
+	delay(5000);
+}

@@ -1,18 +1,32 @@
- #include "serverweb.h"
-  
-ServerJr server(80, "yourSSID", "yourPassword");
-  
- void setup() {
-    server.addRoute("/", handleRoot);
-    server.start("Server started on port 80");
+#include "serverweb.h"
+#include "wifiJr.h"
+
+ServerWebJr server(80, "SSID", "PASSWORD");
+WiFiJr wifi("SSID", "PASSWORD");
+
+void handleRoot() {
+	server.getServer().send(200, "text/plain", "Ola!");
 }
-  
+
+void setup() {
+	Serial.begin(115200);
+	if (wifi.connect()) {
+
+        Serial.println("WiFi conectado!");
+        Serial.println(wifi.getIPAddress());
+
+    } else {
+
+        Serial.println("Não foi possível conectar ao WiFi.");
+
+    }
+
+	server.addRoute("/", handleRoot);
+	server.start("Servidor iniciado");
+}
+
 void loop() {
-    server.getServer().handleClient(); // Handle incoming client requests
-    // Your main code here
-}
-  
- void handleRoot() {
-     // Your main code here
-    server.getServer().send(200, "text/plain", "Hello, World!");
+	server.getServer().handleClient();
+	Serial.println(wifi.getIPAddress());
+	delay(5000);
 }
