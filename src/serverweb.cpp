@@ -1,7 +1,7 @@
 #include "ServerWebJr.h"
 
 
-ServerJr::ServerJr(
+ServerWebJr::ServerWebJr(
     int port,
     const char* ssid,
     const char* password
@@ -14,7 +14,7 @@ ServerJr::ServerJr(
 }
 
 
-void ServerJr::addRoute(
+void ServerWebJr::addRoute(
     const char* path,
     void (*callback)()
 )
@@ -23,7 +23,7 @@ void ServerJr::addRoute(
 }
 
 
-void ServerJr::start(const char* msg)
+void ServerWebJr::start(const char* msg)
 {
     server.begin();
 
@@ -33,13 +33,13 @@ void ServerJr::start(const char* msg)
 }
 
 
-void ServerJr::handleClient()
+void ServerWebJr::handleClient()
 {
     server.handleClient();
 }
 
 
-WebServerJr& ServerJr::getServer()
+ServerWebJr& ServerWebJr::getServer()
 {
     return server;
 }
