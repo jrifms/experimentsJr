@@ -43,6 +43,10 @@ class ServerWebJr {
       const char* password
     );
 
+    ServerWebJr(
+      int port
+    );
+
     void addRoute(
       const char* path,
       void (*callback)()

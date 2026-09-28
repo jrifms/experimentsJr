@@ -13,6 +13,15 @@ ServerWebJr::ServerWebJr(
 {
 }
 
+ServerWebJr::ServerWebJr(
+    int port
+)
+    : port(port),
+      server(port)
+{
+}
+
+
 
 void ServerWebJr::addRoute(
     const char* path,
