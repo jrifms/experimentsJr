@@ -13,18 +13,6 @@ FilesJr::FilesJr()
 
 #endif
 
-    if (!this->filesystem) {
-
-        Serial.println(
-            "An error has occurred while mounting SPIFFS"
-        );
-
-    } else {
-
-        Serial.println(
-            "SPIFFS mounted successfully"
-        );
-    }
 }
 
 
@@ -55,10 +43,7 @@ bool FilesJr::createFile(
 
     if (!file) {
 
-        Serial.println(
-            "Failed to create file"
-        );
-
+        //Serial.println( "Failed to create file");
         return false;
     }
 
@@ -86,9 +71,7 @@ bool FilesJr::readFile(
 
     if (!file) {
 
-        Serial.println(
-            "Failed to open file for reading"
-        );
+        //Serial.println( "Failed to open file for reading");
 
         return false;
     }
@@ -103,7 +86,7 @@ bool FilesJr::readFile(
 
 void FilesJr::listFiles()
 {
-    Serial.println("Listing files:");
+    //Serial.println("Listing files:");
 
 #if defined(ESP8266)
 
@@ -117,9 +100,7 @@ void FilesJr::listFiles()
 
     if (!root) {
 
-        Serial.println(
-            "Failed to open root directory"
-        );
+        //Serial.println("Failed to open root directory");
 
         return;
     }

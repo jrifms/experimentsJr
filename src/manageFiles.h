@@ -45,7 +45,6 @@ public:
     bool isFileSystemMounted();
 
 private:
-
     bool filesystem;
 };
 
