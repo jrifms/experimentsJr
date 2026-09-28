@@ -26,10 +26,7 @@ bool FilesJr::deleteFile(const char* path)
 }
 
 
-bool FilesJr::createFile(
-    const char* path,
-    const char* content
-)
+bool FilesJr::createFile(const char* path, const char* content)
 {
 #if defined(ESP8266)
 
@@ -42,23 +39,19 @@ bool FilesJr::createFile(
 #endif
 
     if (!file) {
-
         //Serial.println( "Failed to create file");
         return false;
     }
 
     file.print(content);
     file.close();
-
     return true;
 }
 
 
-bool FilesJr::readFile(
-    const char* path,
-    String& content
-)
+String FilesJr::readFile(const char* path)
 {
+String content = "";
 #if defined(ESP8266)
 
     File file = SPIFFS.open(path, "r");
@@ -70,23 +63,17 @@ bool FilesJr::readFile(
 #endif
 
     if (!file) {
-
-        //Serial.println( "Failed to open file for reading");
-
-        return false;
+        return "";
     }
-
     content = file.readString();
-
     file.close();
-
-    return true;
+    return content;
 }
 
 
-void FilesJr::listFiles()
+std::vector<String>  FilesJr::listFiles()
 {
-    //Serial.println("Listing files:");
+    std::vector<String> arquivos;
 
 #if defined(ESP8266)
 
@@ -99,21 +86,16 @@ void FilesJr::listFiles()
 #endif
 
     if (!root) {
-
         //Serial.println("Failed to open root directory");
-
-        return;
+        return arquivos;
     }
 
     File file = root.openNextFile();
-
     while (file) {
-
-        Serial.print("FILE: ");
-        Serial.println(file.name());
-
+        arquivos.push_back(file.name());
         file = root.openNextFile();
     }
+    return arquivos;
 }
 
 
