@@ -1,61 +1,127 @@
 #include "manageFiles.h"
 
-FilesJr::FilesJr() {    
-    // Initialize the file system (SPIFFS)
-    if (!SPIFFS.begin(true)) {
-        Serial.println("An error has occurred while mounting SPIFFS");
-        this->filesytem = false;
+
+FilesJr::FilesJr()
+{
+    #if defined(ESP8266)
+
+        this->filesystem = SPIFFS.begin();
+
+    #elif defined(ESP32)
+
+        this->filesystem = SPIFFS.begin(true);
+
+    #endif
+
+
+    if (!this->filesystem) {
+
+        Serial.println(
+            "An error has occurred while mounting SPIFFS"
+        );
+
     } else {
-        Serial.println("SPIFFS mounted successfully");
-        this->filesytem = true;
+
+        Serial.println(
+            "SPIFFS mounted successfully"
+        );
+
     }
-}
- 
-FilesJr::deleteFile(char* path) {
-    if (SPIFFS.exists(path)) {
-        SPIFFS.remove(path);
-        return true;
-    }
-    return false;
 }
 
-FilesJr::createFile(char* content) {
+
+bool FilesJr::deleteFile(const char* path)
+{
+    if (!SPIFFS.exists(path)) {
+        return false;
+    }
+
+    return SPIFFS.remove(path);
+}
+
+
+bool FilesJr::createFile(
+    const char* path,
+    const char* content
+)
+{
     File file = SPIFFS.open(path, FILE_WRITE);
+
     if (!file) {
-        Serial.println("Failed to create file");
+
+        Serial.println(
+            "Failed to create file"
+        );
+
         return false;
     }
+
     file.print(content);
+
     file.close();
+
     return true;
 }
 
-FilesJr::readFile(String& content) {
+
+bool FilesJr::readFile(
+    const char* path,
+    String& content
+)
+{
     File file = SPIFFS.open(path, FILE_READ);
+
     if (!file) {
-        Serial.println("Failed to open file for reading");
+
+        Serial.println(
+            "Failed to open file for reading"
+        );
+
         return false;
     }
+
     content = file.readString();
+
     file.close();
+
     return true;
 }
 
-FilesJr::listFiles() {
+
+void FilesJr::listFiles()
+{
     Serial.println("Listing files:");
+
     File root = SPIFFS.open("/");
+
+    if (!root) {
+
+        Serial.println(
+            "Failed to open root directory"
+        );
+
+        return;
+    }
+
     File file = root.openNextFile();
+
     while (file) {
+
         Serial.print("FILE: ");
         Serial.println(file.name());
+
         file = root.openNextFile();
     }
 }
 
-FilesJr::isFileSystemMounted() {
-    return this->filesytem;
+
+bool FilesJr::isFileSystemMounted()
+{
+    return this->filesystem;
 }
 
-FilesJr::fileExists(char* path) {
+
+bool FilesJr::fileExists(const char* path)
+{
     return SPIFFS.exists(path);
 }
