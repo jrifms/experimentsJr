@@ -37,6 +37,8 @@ class ServerWebJr {
 
   public:
 
+    ServerWebJr();
+
     ServerWebJr(
       int port,
       const char* ssid,

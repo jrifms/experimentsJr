@@ -1,7 +1,11 @@
 #include "wifiJr.h"
 
-WiFiJr::WiFiJr(const char* ssid, const char* password)
-    : ssid(ssid), password(password) {
+
+WiFiJr::WiFiJr()
+{
+}
+
+WiFiJr::WiFiJr(const char* ssid, const char* password): ssid(ssid), password(password) {
 }
 
 bool WiFiJr::connect() {

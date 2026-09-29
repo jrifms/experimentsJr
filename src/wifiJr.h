@@ -29,6 +29,8 @@ class WiFiJr {
 
   public:
 
+    WiFiJr();
+
     WiFiJr(const char* ssid, const char* password);
 
     bool connect();

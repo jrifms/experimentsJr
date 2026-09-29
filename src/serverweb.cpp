@@ -1,5 +1,9 @@
 #include "serverweb.h"
 
+ServerWebJr::ServerWebJr()
+{
+}
+
 
 ServerWebJr::ServerWebJr(
     int port,
