@@ -29,10 +29,12 @@ ServerWebJr::ServerWebJr(
 
 void ServerWebJr::addRoute(
     const char* path,
-    void (*callback)()
+   RouteHandler handler
 )
 {
-    server.on(path, callback);
+    server.on(route, [this, handler]() {
+        handler(*this);
+    });
 }
 
 
