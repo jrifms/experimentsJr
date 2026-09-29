@@ -32,7 +32,7 @@ void ServerWebJr::addRoute(
    RouteHandler handler
 )
 {
-    server.on(route, [this, handler]() {
+    server.on(path, [this, handler]() {
         handler(*this);
     });
 }
