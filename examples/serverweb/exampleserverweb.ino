@@ -4,7 +4,7 @@
 ServerWebJr server(80, "SSID", "PASSWORD");
 WiFiJr wifi("SSID", "PASSWORD");
 
-void handleRoot() {
+void handleRoot(ServerWebJr& server) {
 	server.getServer().send(200, "text/plain", "Ola!");
 }
 
