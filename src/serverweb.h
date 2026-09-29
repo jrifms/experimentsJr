@@ -37,6 +37,8 @@ class ServerWebJr {
 
   public:
 
+    using RouteHandler = void (*)(ServerWebJr&);
+
     ServerWebJr();
 
     ServerWebJr(
@@ -51,7 +53,7 @@ class ServerWebJr {
 
     void addRoute(
       const char* path,
-      void (*callback)()
+      RouteHandler handler
     );
 
     void start(const char* msg = nullptr);
