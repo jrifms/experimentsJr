@@ -5,10 +5,11 @@
 // Configuração padrão
 // ============================================================
 
-const String nameFirstSSID      = "ConfigureDeviceJR";
-const String passwordDefault    = "12345678";
+const String nameFirstSSID        = "ConfigureDeviceJR";
+const String passwordDefault      = "12345678";
 const String typeNetWorkDefault = "accesspoint";
-const String nameDefaultConf    = "conf.txt";
+const String nameDefaultConf     = "conf.txt";
+const String nameDNS                = "ifms.local";
 
 bool isConfiguredYet = false;
 
@@ -171,11 +172,8 @@ void IotJr::initiated()
                 "let's create page config!\n";
 
 
-            wifi = WiFiJr(
-                nameFirstSSID.c_str(),
-                passwordDefault.c_str()
-            );
-
+            wifi = WiFiJr(nameFirstSSID.c_str(), passwordDefault.c_str());
+            wifi.startDNS(nameDNS.c_str());
 
             if (wifi.createAccessPoint()) {
 
@@ -220,11 +218,8 @@ void IotJr::running(
     extractingData(line);
 
 
-    wifi = WiFiJr(
-        SSID.c_str(),
-        password.c_str()
-    );
-
+    wifi = WiFiJr( SSID.c_str(), password.c_str());
+    wifi.startDNS(nameDNS.c_str());
 
     isConnected =
         wifi.isConnected();

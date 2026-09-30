@@ -25,6 +25,11 @@
 
 #endif
 
+#include <DNSServer.h>
+
+// For compute the dns
+DNSServer dnsServer;
+
 class WiFiJr {
 
   public:
@@ -42,6 +47,8 @@ class WiFiJr {
     String getAccessPointIP();
 
     String getIPAddress();
+
+    void startDNS(const char* domain); // For create a dns
 
   private:
 

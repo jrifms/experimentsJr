@@ -38,7 +38,6 @@ String WiFiJr::getIPAddress() {
 
 bool WiFiJr::createAccessPoint()
 {
-    delay(1000);
     WiFi.mode(WIFI_AP);
     return WiFi.softAP( ssid, password);
 }
@@ -46,4 +45,8 @@ bool WiFiJr::createAccessPoint()
 String WiFiJr::getAccessPointIP()
 {
     return WiFi.softAPIP().toString();
+}
+
+void WiFiJr::startDNS(const char* domain) {
+    dnsServer.start(53, domain, WiFi.softAPIP());
 }
