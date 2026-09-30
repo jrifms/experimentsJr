@@ -173,7 +173,7 @@ void IotJr::initiated()
 
 
             wifi = WiFiJr(nameFirstSSID.c_str(), passwordDefault.c_str());
-            //wifi.startDNS(nameDNS.c_str());
+            wifi.startDNS(nameDNS.c_str());
 
             if (wifi.createAccessPoint()) {
 
@@ -473,7 +473,7 @@ void IotJr::createConfigFactory()
 
 
     while (!isConfiguredYet) {
-        //w.dnsServer.processNextRequest();
+        wifi.handleDNS();
         serverFactory.getServer().handleClient();
 
         delay(1);
