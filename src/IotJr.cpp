@@ -277,7 +277,7 @@ void IotJr::running(
     else {
 
         if (wifi.connect()) {
-            wifi.startDNS(nameDNS.c_str());
+            wifi.startMDNS(nameDNS.c_str());
             msg +=
                 " with IP [" +
                 wifi.getIPAddress() +
