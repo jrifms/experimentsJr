@@ -9,7 +9,7 @@ const String nameFirstSSID        = "ConfigureDeviceJR";
 const String passwordDefault      = "12345678";
 const String typeNetWorkDefault = "accesspoint";
 const String nameDefaultConf     = "conf.txt";
-const String nameDNS                = "ifms.local";
+const String nameDNS                = "velhojack.local";
 
 bool isConfiguredYet = false;
 
