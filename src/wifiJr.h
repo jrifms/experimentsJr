@@ -27,6 +27,7 @@
 
 #include <DNSServer.h>
 
+extern DNSServer dnsServer;
 
 class WiFiJr {
 
@@ -55,7 +56,6 @@ class WiFiJr {
 
     const char* ssid;
     const char* password;
-    DNSServer dnsServer;
 };
 
 #endif
