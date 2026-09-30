@@ -4,8 +4,8 @@
 */
 // ----------------------- Definition of object for create a modem -------------------------------
 const int button_reset        = D1;
-const int  led_information = LED_BUILTIN;
- IotJr modem(nameDefaultConf, button_reset, led_information);
+const int  led_information   = LED_BUILTIN;
+IotJr modem(nameDefaultConf, button_reset, led_information);
 // -------------------------------------------------------------------------------------------------------
 
 // ----------------------- Functions for requering server web ------------------------------------
