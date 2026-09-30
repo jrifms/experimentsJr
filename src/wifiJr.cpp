@@ -1,5 +1,5 @@
 #include "wifiJr.h"
-
+DNSServer dnsServer;
 
 WiFiJr::WiFiJr()
 {
