@@ -51,8 +51,9 @@ public:
     String msg;
 
     bool setupFactory = true;
-
     ServerWebJr* server = nullptr;
+    WiFiJr wifi;
+
 
 
     IotJr(
@@ -92,7 +93,7 @@ public:
     bool mountingSystemFiles();
 
 
-    void createConfigFactory();
+    void createConfigFactory(WiFiJr w);
 
 
     bool isFirstSetup();
@@ -108,12 +109,8 @@ private:
     String typeNetWork;
     String SSID;
     String password;
-
     bool isMounted = false;
     bool isConnected = false;
-
-    WiFiJr wifi;
-
     int buttonReset;
     int ledInformation;
 };

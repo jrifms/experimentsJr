@@ -183,7 +183,7 @@ void IotJr::initiated()
                     "\n";
 
 
-                createConfigFactory();
+                createConfigFactory(wifi);
             }
         }
 
@@ -445,10 +445,9 @@ bool IotJr::mountingSystemFiles()
 // FACTORY CONFIGURATION
 // ============================================================
 
-void IotJr::createConfigFactory()
+void IotJr::createConfigFactory(WiFiJr w)
 {
     ServerWebJr serverFactory(80);
-
 
     serverFactory.addRoute(
         "/",
@@ -474,10 +473,8 @@ void IotJr::createConfigFactory()
 
 
     while (!isConfiguredYet) {
-
-        serverFactory
-            .getServer()
-            .handleClient();
+        w.dnsServer.processNextRequest();
+        serverFactory.getServer().handleClient();
 
         delay(1);
     }

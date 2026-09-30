@@ -27,8 +27,6 @@
 
 #include <DNSServer.h>
 
-// For compute the dns
-DNSServer dnsServer;
 
 class WiFiJr {
 
@@ -37,6 +35,9 @@ class WiFiJr {
     WiFiJr();
 
     WiFiJr(const char* ssid, const char* password);
+
+    // For compute the dns
+    DNSServer dnsServer;
 
     bool connect();
 
