@@ -1,11 +1,12 @@
 #include "IotJr.h"
 /*
 * Muito importante para resetar o dispositivo você deve conectar o GND com o pino reset [definido conforme a linha a baixo]
+* Acesse: velhojack.local
 */
 // ----------------------- Definition of object for create a modem -------------------------------
 const int button_reset        = D1;
-const int  led_information   = LED_BUILTIN;
-IotJr modem(nameDefaultConf, button_reset, led_information);
+const int  led_information = LED_BUILTIN;
+ IotJr modem(nameDefaultConf, button_reset, led_information);
 // -------------------------------------------------------------------------------------------------------
 
 // ----------------------- Functions for requering server web ------------------------------------
@@ -42,7 +43,7 @@ void setup() {
     Serial.println(modem.msg);
     Route routes[] = {
         {"/", read},
-        {"/test", teste},
+        {"/test", teste},                        //10.9.35.242
     };
     modem.running(routes, 2);  // keep runing
     Serial.println(modem.msg);
@@ -53,6 +54,11 @@ void setup() {
 void loop() {
 
 // ------------------------ This line is responsable for keeping the server -------------------
+   if(modem.typeNetWork == "accesspoint"){
+        modem.wifi.handleDNS();
+   }else{
+        modem.wifi.handleMDNS();
+   }
     modem.server->getServer().handleClient();
     modem.errorConnectWifi();
 // ---------------------------------------------------------------------------------------------------
