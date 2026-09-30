@@ -49,11 +49,22 @@ String WiFiJr::getAccessPointIP()
 
 void WiFiJr::startDNS(const char* domain)
 {
-    dnsServer.start(
+    Serial.println("Iniciando DNS...");
+
+    Serial.print("Dominio: ");
+    Serial.println(domain);
+
+    Serial.print("IP do AP: ");
+    Serial.println(WiFi.softAPIP());
+
+    bool result = dnsServer.start(
         53,
         domain,
         WiFi.softAPIP()
     );
+
+    Serial.print("DNS iniciado: ");
+    Serial.println(result ? "SIM" : "NAO");
 }
 
 void WiFiJr::handleDNS()
