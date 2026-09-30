@@ -39,6 +39,13 @@ String WiFiJr::getIPAddress() {
 bool WiFiJr::createAccessPoint()
 {
     WiFi.mode(WIFI_AP);
+    IPAddress apIP(192, 168, 4, 1);
+    IPAddress gateway(192, 168, 4, 1);
+    IPAddress subnet(255, 255, 255, 0);
+
+    if (!WiFi.softAPConfig(apIP, gateway, subnet)) {
+        return false;
+    }
     return WiFi.softAP( ssid, password);
 }
 
@@ -93,7 +100,6 @@ bool WiFiJr::startMDNS(const char* hostname)
 
         Serial.print("Endereco: http://");
         Serial.print(hostname);
-        Serial.println(".local");
     }
     else {
 
