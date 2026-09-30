@@ -93,7 +93,7 @@ public:
     bool mountingSystemFiles();
 
 
-    void createConfigFactory(WiFiJr w);
+    void createConfigFactory();
 
 
     bool isFirstSetup();
