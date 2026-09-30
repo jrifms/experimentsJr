@@ -36,8 +36,6 @@ class WiFiJr {
 
     WiFiJr(const char* ssid, const char* password);
 
-    // For compute the dns
-    //DNSServer dnsServer;
 
     bool connect();
 
