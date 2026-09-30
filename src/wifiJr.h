@@ -49,12 +49,15 @@ class WiFiJr {
 
     String getIPAddress();
 
-    //void startDNS(const char* domain); // For create a dns
+    void startDNS(const char* domain); // For create a dns
+    
+    void handleDNS();
 
   private:
 
     const char* ssid;
     const char* password;
+    DNSServer dnsServer;
 };
 
 #endif
