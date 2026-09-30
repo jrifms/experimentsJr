@@ -54,6 +54,11 @@ class WiFiJr {
     
     void handleDNS();
 
+    // mDNS para rede existente
+    bool startMDNS(const char* hostname);
+
+    void handleMDNS();
+
   private:
 
     const char* ssid;

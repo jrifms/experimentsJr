@@ -71,3 +71,39 @@ void WiFiJr::handleDNS()
 {
     dnsServer.processNextRequest();
 }
+
+bool WiFiJr::startMDNS(const char* hostname)
+{
+    Serial.println("Iniciando mDNS...");
+
+    Serial.print("Hostname: ");
+    Serial.println(hostname);
+
+    bool result = MDNS.begin(hostname);
+
+    if (result) {
+
+        MDNS.addService(
+            "http",
+            "tcp",
+            80
+        );
+
+        Serial.println("mDNS iniciado!");
+
+        Serial.print("Endereco: http://");
+        Serial.print(hostname);
+        Serial.println(".local");
+    }
+    else {
+
+        Serial.println("Erro ao iniciar mDNS!");
+    }
+
+    return result;
+}
+
+void WiFiJr::handleMDNS()
+{
+    MDNS.update();
+}
