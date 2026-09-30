@@ -37,7 +37,7 @@ class WiFiJr {
     WiFiJr(const char* ssid, const char* password);
 
     // For compute the dns
-    DNSServer dnsServer;
+    //DNSServer dnsServer;
 
     bool connect();
 
@@ -49,7 +49,7 @@ class WiFiJr {
 
     String getIPAddress();
 
-    void startDNS(const char* domain); // For create a dns
+    //void startDNS(const char* domain); // For create a dns
 
   private:
 

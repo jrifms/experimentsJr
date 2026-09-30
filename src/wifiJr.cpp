@@ -47,6 +47,6 @@ String WiFiJr::getAccessPointIP()
     return WiFi.softAPIP().toString();
 }
 
-void WiFiJr::startDNS(const char* domain) {
-    dnsServer.start(53, domain, WiFi.softAPIP());
-}
+//void WiFiJr::startDNS(const char* domain) {
+//    dnsServer.start(53, domain, WiFi.softAPIP());
+//}
