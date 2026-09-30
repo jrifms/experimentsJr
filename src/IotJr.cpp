@@ -217,9 +217,8 @@ void IotJr::running(
 
     extractingData(line);
 
-
     wifi = WiFiJr( SSID.c_str(), password.c_str());
-    //wifi.startDNS(nameDNS.c_str());
+    wifi.startDNS(nameDNS.c_str());
 
     isConnected =
         wifi.isConnected();
