@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leitura de Sensores</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-1: #0f172a;
+    --bg-2: #1e293b;
+    --card: #ffffff;
+    --accent: #06b6d4;
+    --accent-2: #8b5cf6;
+    --ok: #10b981;
+    --warn: #f59e0b;
+    --danger: #ef4444;
+    --text: #1e293b;
+    --muted: #64748b;
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: radial-gradient(circle at 15% 10%, #1e3a8a 0%, transparent 45%),
+                radial-gradient(circle at 85% 90%, #6d28d9 0%, transparent 45%),
+                linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    color: var(--text);
+    padding: 32px 20px 60px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .wrapper {
+    width: 100%;
+    max-width: 1080px;
+  }
+
+  /* ---------- Cabeçalho ---------- */
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeDown .6s ease;
+  }
+
+  header .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(6, 182, 212, .15);
+    border: 1px solid rgba(6, 182, 212, .4);
+    color: #67e8f9;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+
+  header .badge .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ok);
+    box-shadow: 0 0 0 0 rgba(16,185,129,.7);
+    animation: pulse 1.8s infinite;
+  }
+
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(16,185,129,.7); }
+    70%  { box-shadow: 0 0 0 12px rgba(16,185,129,0); }
+    100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+  }
+
+  header h1 {
+    color: #f8fafc;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+
+  header p.lead {
+    color: #94a3b8;
+    font-size: 1rem;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Frase em destaque ---------- */
+  .quote {
+    position: relative;
+    margin: 0 auto 44px;
+    max-width: 720px;
+    text-align: center;
+    padding: 26px 30px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(6,182,212,.12), rgba(139,92,246,.12));
+    border: 1px solid rgba(148, 163, 184, .18);
+    backdrop-filter: blur(6px);
+    animation: fadeUp .7s ease;
+  }
+
+  .quote::before {
+    content: '“';
+    position: absolute;
+    top: -8px; left: 22px;
+    font-size: 5rem;
+    line-height: 1;
+    color: rgba(6,182,212,.35);
+    font-family: Georgia, serif;
+  }
+
+  .quote p {
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    font-style: italic;
+    color: #e2e8f0;
+    line-height: 1.55;
+  }
+
+  .quote span {
+    display: block;
+    margin-top: 12px;
+    font-size: .82rem;
+    font-style: normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #67e8f9;
+    font-weight: 700;
+  }
+
+  /* ---------- Grid de sensores ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 22px 22px 20px;
+    box-shadow: 0 18px 40px rgba(2, 6, 23, .45);
+    position: relative;
+    overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease;
+    animation: fadeUp .6s ease backwards;
+  }
+
+  .card:nth-child(1) { animation-delay: .05s; }
+  .card:nth-child(2) { animation-delay: .12s; }
+  .card:nth-child(3) { animation-delay: .19s; }
+  .card:nth-child(4) { animation-delay: .26s; }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 26px 50px rgba(2, 6, 23, .55);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  }
+
+  .card .icon {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, rgba(6,182,212,.15), rgba(139,92,246,.15));
+    margin-bottom: 14px;
+  }
+
+  .card .icon svg { width: 24px; height: 24px; stroke: var(--accent); }
+
+  .card .label {
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .card .value {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.1;
+    letter-spacing: -1px;
+  }
+
+  .card .value small {
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-left: 4px;
+    letter-spacing: 0;
+  }
+
+  /* Barra de progresso */
+  .bar {
+    margin-top: 16px;
+    height: 7px;
+    background: #eef2f7;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .bar span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transition: width .8s ease;
+  }
+
+  /* Status */
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: .78rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .status.ok      { background: rgba(16,185,129,.12); color: #059669; }
+  .status.warn    { background: rgba(245,158,11,.14); color: #b45309; }
+  .status.danger  { background: rgba(239,68,68,.12);  color: #b91c1c; }
+
+  .status .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* ---------- Rodapé ---------- */
+  footer {
+    text-align: center;
+    color: #64748b;
+    font-size: .82rem;
+    letter-spacing: .5px;
+  }
+
+  footer strong { color: #94a3b8; }
+
+  /* ---------- Animações ---------- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 520px) {
+    body { padding: 24px 14px 40px; }
+    .card .value { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <!-- Cabeçalho -->
+    <header>
+      <div class="badge"><span class="dot"></span> Monitoramento em tempo real</div>
+      <h1>Leitura de Sensores</h1>
+      <p class="lead">Acompanhe os valores capturados pelos sensores do dispositivo em tempo real.</p>
+    </header>
+
+    <!-- Frase em destaque -->
+    <div class="quote">
+      <p>A leitura de sensores é a voz silenciosa do ambiente — cada número conta uma história sobre o mundo ao redor.</p>
+      <span>— Leitura de Sensores</span>
+    </div>
+
+    <!-- Grid de sensores -->
+    <div class="grid">
+
+      <!-- Temperatura -->
+      <div class="card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>
+          </svg>
+        </div>
+        <div class="label">Temperatura</div>
+        <div class="value">24.6<small>°C</small></div>
+        <div class="bar"><span style="width: 62%"></span></div>
+        <div class="status ok"><span class="dot"></span> Normal</div>
+      </div>
+
+      <!-- Umidade -->
+      <div class="card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+          </svg>
+        </div>
+        <div class="label">Umidade</div>
+        <div class="value">58<small>%</small></div>
+        <div class="bar"><span style="width: 58%"></span></div>
+        <div class="status ok"><span class="dot"></span> Normal</div>
+      </div>
+
+      <!-- Pressão -->
+      <div class="card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+          </svg>
+        </div>
+        <div class="label">Pressão</div>
+        <div class="value">1013<small>hPa</small></div>
+        <div class="bar"><span style="width: 74%"></span></div>
+        <div class="status warn"><span class="dot"></span> Atenção</div>
+      </div>
+
+      <!-- Luminosidade -->
+      <div class="card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+        </div>
+        <div class="label">Luminosidade</div>
+        <div class="value">342<small>lux</small></div>
+        <div class="bar"><span style="width: 34%"></span></div>
+        <div class="status danger"><span class="dot"></span> Baixa</div>
+      </div>
+
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+      Última atualização: <strong>agora mesmo</strong> · Fonte: <strong>sensor-01</strong>
+    </footer>
+
+  </div>
+
+</body>
+</html>
