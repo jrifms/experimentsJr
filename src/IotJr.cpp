@@ -173,7 +173,7 @@ void IotJr::initiated()
 
 
             wifi = WiFiJr(nameFirstSSID.c_str(), passwordDefault.c_str());
-            wifi.startDNS(nameDNS.c_str());
+            //wifi.startDNS(nameDNS.c_str());
 
             if (wifi.createAccessPoint()) {
 
@@ -219,7 +219,7 @@ void IotJr::running(
 
 
     wifi = WiFiJr( SSID.c_str(), password.c_str());
-    wifi.startDNS(nameDNS.c_str());
+    //wifi.startDNS(nameDNS.c_str());
 
     isConnected =
         wifi.isConnected();
