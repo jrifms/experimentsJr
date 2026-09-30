@@ -49,6 +49,7 @@ class IotJr {
 public:
 
     String msg;
+    String typeNetWork;
     WiFiJr wifi;
     bool setupFactory = true;
     ServerWebJr* server = nullptr;
@@ -104,7 +105,6 @@ private:
 
     FilesJr files;
     String conf;
-    String typeNetWork;
     String SSID;
     String password;
     bool isMounted = false;
