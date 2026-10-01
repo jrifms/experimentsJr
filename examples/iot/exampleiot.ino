@@ -24,6 +24,7 @@ void read(ServerWebJr& server) {
 
 void getSensors(ServerWebJr& server) {
 
+    delay(200);
     float temperatura = 24.6;
     float umidade = 58;
     float pressao = 1013;
