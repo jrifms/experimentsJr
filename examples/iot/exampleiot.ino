@@ -22,9 +22,41 @@ void read(ServerWebJr& server) {
     server.getServer().send(200, "text/html", html);
 }
 
-void teste(ServerWebJr& server) {
-        server.getServer().send(200, "text/plain", "Minha pagina esta ok !!!!! ");
-        return;
+void getSensors(ServerWebJr& server) {
+
+    float temperatura = 24.6;
+    float umidade = 58;
+    float pressao = 1013;
+
+    String json = "{";
+    json += "\"sensores\":[";
+
+    json += "{";
+    json += "\"nome\":\"Temperatura\",";
+    json += "\"valor\":" + String(temperatura, 1) + ",";
+    json += "\"unidade\":\"°C\"";
+    json += "},";
+
+    json += "{";
+    json += "\"nome\":\"Umidade\",";
+    json += "\"valor\":" + String(umidade, 0) + ",";
+    json += "\"unidade\":\"%\"";
+    json += "},";
+
+    json += "{";
+    json += "\"nome\":\"Pressão\",";
+    json += "\"valor\":" + String(pressao, 0) + ",";
+    json += "\"unidade\":\"hPa\"";
+    json += "}";
+
+    json += "]";
+    json += "}";
+
+    server.getServer().send(
+        200,
+        "application/json",
+        json
+    );
 }
 // -------------------------------------------------------------------------------------------------------
 
@@ -43,7 +75,7 @@ void setup() {
     Serial.println(modem.msg);
     Route routes[] = {
         {"/", read},
-        {"/test", teste},                        //10.9.35.242
+        {"/sensors", getSensors},                        //10.9.35.242
     };
     modem.running(routes, 2);  // keep runing
     Serial.println(modem.msg);
