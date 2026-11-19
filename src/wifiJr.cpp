@@ -111,5 +111,7 @@ bool WiFiJr::startMDNS(const char* hostname)
 
 void WiFiJr::handleMDNS()
 {
-    MDNS.update();
+    #if defined(ESP8266)
+        MDNS.update();
+    #endif
 }
