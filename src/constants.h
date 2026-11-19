@@ -1,11 +1,22 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+
+//Definição de pino de reset do dispositivo
+#ifndef PIN_RESET
+    #if defined(ESP8266)
+        #define PIN_RESET D1
+    #elif defined(ESP32)
+        #define PIN_RESET 0
+    #endif
+#endif
+
 //Definição de SSID e senha da rede Wi-Fi
 #ifndef SSID_LOCAL
     #define SSID_LOCAL "Teste_Rede_JR"
 #endif
 
+// Definição de senha da rede Wi-Fi
 #ifndef PASSWORD_LOCAL
     #define PASSWORD_LOCAL "12345678"
 #endif
