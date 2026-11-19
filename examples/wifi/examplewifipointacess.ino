@@ -1,11 +1,12 @@
 #include "serverweb.h"
 #include "wifiJr.h"
+#include "constants.h"
 
-WiFiJr wifi("Teste_Rede_JR", "12345678");
+WiFiJr wifi("SSID", "PASSWORD");
 ServerWebJr server(80);
 
 
-void handleRoot() {
+void handleRoot(ServerWebJr& server) {
 	server.getServer().send(200, "text/plain", "Ola!");
 }
 
