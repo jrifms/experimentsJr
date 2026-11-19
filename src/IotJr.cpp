@@ -188,8 +188,7 @@ void IotJr::initiated()
 
     } else {
 
-        msg +=
-            "-> Not is possible mounting the system file!\n";
+        msg += "-> Not is possible mounting the system file!\n";
     }
 }
 
@@ -501,10 +500,7 @@ void IotJr::checkPinAnd_Reset()
 
     if (value == LOW) {
 
-        msg +=
-            "-> The button RESET is on and "
-            "now we are delete config\n";
-
+        msg +=  "-> The button RESET is on and  now we are delete config\n";
 
         Serial.print(msg);
 
