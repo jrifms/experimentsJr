@@ -30,6 +30,8 @@ public:
 
     String readFile( const char* path);
 
+    bool begin();
+
     bool deleteFile(const char* path);
 
     bool fileExists(const char* path);
