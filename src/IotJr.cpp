@@ -80,6 +80,8 @@ void configure(ServerWebJr& server)
 {
     FilesJr files;
 
+    files.begin();
+    
     if (
         !server.getServer().hasArg("mode") ||
         !server.getServer().hasArg("ssid") ||
