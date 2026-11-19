@@ -7,7 +7,7 @@
     #if defined(ESP8266)
         #define PIN_RESET D1
     #elif defined(ESP32)
-        #define PIN_RESET 0
+        #define PIN_RESET 2
     #endif
 #endif
 
