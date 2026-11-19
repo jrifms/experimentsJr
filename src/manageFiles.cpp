@@ -13,7 +13,7 @@ bool FilesJr::begin(){
 
     #elif defined(ESP32)
 
-    this->filesystem = SPIFFS.begin(false);
+    this->filesystem = SPIFFS.begin(true);
 
     #endif
     return this->filesystem;
