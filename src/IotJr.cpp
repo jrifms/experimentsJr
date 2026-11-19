@@ -158,6 +158,7 @@ IotJr::IotJr(
 
 void IotJr::initiated()
 {
+    files.begin();
     checkPinAnd_Reset();
 
 
