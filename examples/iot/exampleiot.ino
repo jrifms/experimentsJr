@@ -1,10 +1,11 @@
 #include "IotJr.h"
+#include "constants.h"
 /*
 * Muito importante para resetar o dispositivo você deve conectar o GND com o pino reset [definido conforme a linha a baixo]
 * Acesse: velhojack.local
 */
 // ----------------------- Definition of object for create a modem -------------------------------
-const int button_reset        = D1;
+const int button_reset        = PIN_RESET;
 const int  led_information = LED_BUILTIN;
  IotJr modem(nameDefaultConf, button_reset, led_information);
 // -------------------------------------------------------------------------------------------------------
