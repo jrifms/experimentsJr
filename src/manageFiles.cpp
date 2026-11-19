@@ -3,16 +3,20 @@
 
 FilesJr::FilesJr()
 {
-#if defined(ESP8266)
+}
+
+bool FilesJr::begin(){
+
+    #if defined(ESP8266)
 
     this->filesystem = SPIFFS.begin();
 
-#elif defined(ESP32)
+    #elif defined(ESP32)
 
-    this->filesystem = SPIFFS.begin(true);
+    this->filesystem = SPIFFS.begin(false);
 
-#endif
-
+    #endif
+    return this->filesystem;
 }
 
 
