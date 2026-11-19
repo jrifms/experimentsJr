@@ -5,12 +5,13 @@ FilesJr files;
 void setup() {
 		Serial.begin(115200);
 		delay(1000);
-
+        
+    files.begin();
     if(files.isFileSystemMounted()) {
       
 			Serial.println("File system mounted successfully");
 			// Creating a new file
-			if(files.createFile("conf.txt", "192.168.0.1, acesspoint")){
+			if(files.createFile("/conf.txt", "192.168.0.1, acesspoint")){
 				Serial.println("File created successfully! ");
 			}else{
 				Serial.println("File not created!");
@@ -18,18 +19,18 @@ void setup() {
 
 			/* --------------------------------------------------------------------------  */
 
-			// // Reading content from file
-			// String line = files.readFile("conf.txt");
-			// Serial.println(line);
+			// Reading content from file
+			String line = files.readFile("/conf.txt");
+			Serial.println(line);
 
 
 			/* --------------------------------------------------------------------------  */
 
-			// // Checking if the file exists!
-			// if(files.fileExists("conf.txt")){
+			// Checking if the file exists!
+			// if(files.fileExists("/conf.txt")){
 			// 	Serial.println("The file exists!");
 
-			// 	files.deleteFile("conf.txt");
+			// 	files.deleteFile("/conf.txt");
 			// }else{
 			// 	Serial.println("The file not exists!");
 			// }
