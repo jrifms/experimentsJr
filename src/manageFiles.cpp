@@ -25,6 +25,11 @@ bool FilesJr::deleteFile(const char* path)
     if (!SPIFFS.exists(path)) {
         return false;
     }
+    
+    #if defined(ESP32)
+        String newPath = String("/") + String(path);
+        return SPIFFS.remove(newPath.c_str());
+    #endif  
 
     return SPIFFS.remove(path);
 }
@@ -38,7 +43,8 @@ bool FilesJr::createFile(const char* path, const char* content)
 
 #elif defined(ESP32)
 
-    File file = SPIFFS.open(path, FILE_WRITE);
+    String newPath = String("/") + String(path);
+    File file = SPIFFS.open(newPath.c_str(), FILE_WRITE);
 
 #endif
 
@@ -62,7 +68,8 @@ String content = "";
 
 #elif defined(ESP32)
 
-    File file = SPIFFS.open(path, FILE_READ);
+ String newPath = String("/") + String(path);
+    File file = SPIFFS.open(newPath.c_str(), FILE_READ);
 
 #endif
 
@@ -111,5 +118,10 @@ bool FilesJr::isFileSystemMounted()
 
 bool FilesJr::fileExists(const char* path)
 {
-    return SPIFFS.exists(path);
+    #if defined(ESP8266)
+        return SPIFFS.exists(path);
+    #elif defined(ESP32)
+        String newPath = String("/") + String(path);
+        return SPIFFS.exists(newPath.c_str());
+    #endif
 }
