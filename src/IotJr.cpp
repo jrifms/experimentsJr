@@ -79,7 +79,6 @@ void chapa(ServerWebJr& server)
 void configure(ServerWebJr& server)
 {
     FilesJr files;
-
     files.begin();
     
     if (
@@ -497,8 +496,7 @@ bool IotJr::isFirstSetup()
 
 void IotJr::checkPinAnd_Reset()
 {
-    int value =
-        digitalRead(buttonReset);
+    int value = digitalRead(buttonReset);
 
 
     if (value == LOW) {
