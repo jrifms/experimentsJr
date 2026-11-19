@@ -1,25 +1,45 @@
-
+#include "serverweb.h"
 #include "wifiJr.h"
+#include "constants.h"
 
-WiFiJr wifi("SSID", "PASSWORD");
+WiFiJr wifi(SSID_LOCAL, PASSWORD_LOCAL);
+ServerWebJr server(80);
+
+
+void handleRoot(ServerWebJr& server) {
+	server.getServer().send(200, "text/plain", "Ola!");
+}
 
 void setup() {
+	pinMode(LED_BUILTIN, OUTPUT);
+	Serial.begin(115200);
 
-    Serial.begin(115200);
+	for(int i=0; i< 5; i++){
+		digitalWrite(LED_BUILTIN, LOW);
+  	delay(1000);
 
-    if (wifi.connect()) {
+  	digitalWrite(LED_BUILTIN, HIGH);
+  	delay(1000);
+	}
+
+	Serial.println("Iniciando conexao !");
+	if (wifi.createAccessPoint()) {
 
         Serial.println("WiFi conectado!");
-        Serial.println(wifi.getIPAddress());
+        Serial.println(wifi.getAccessPointIP());
 
     } else {
 
         Serial.println("Não foi possível conectar ao WiFi.");
 
     }
+
+	server.addRoute("/", handleRoot);
+	server.start("Servidor iniciado");
 }
 
 void loop() {
-	Serial.println(wifi.getIPAddress());
-	delay(5000);
+	server.getServer().handleClient();
+	//Serial.println(wifi.getAccessPointIP());
+	//delay(5000);
 }
