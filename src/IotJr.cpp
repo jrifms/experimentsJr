@@ -307,7 +307,7 @@ bool IotJr::isFirstSetup()
 void IotJr::checkPinAnd_Reset()
 {
     int value = digitalRead(buttonReset);
-    if (value == HIGH) {
+    if (value == LOW) {
         msg +=  "-> The button RESET is on and  now we are delete config\n";
         Serial.print(msg);
         files.deleteFile(conf.c_str());
