@@ -2,6 +2,8 @@
 #define CONSTANTS_H
 
 
+#define DEBUG_MSG true
+
 //Definição de pino de reset do dispositivo
 #ifndef PIN_RESET
     #if defined(ESP8266)
