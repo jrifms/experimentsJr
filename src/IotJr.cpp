@@ -28,9 +28,7 @@ void home(ServerWebJr& server)
     }
 
     String html = file.readString();
-
     file.close();
-
     server.getServer().send(200,"text/html",html);
 }
 
@@ -44,20 +42,11 @@ void chapa(ServerWebJr& server)
 
     if (!file) {
 
-        server.getServer().send(
-            404,
-            "text/plain",
-            "chapa.png nao encontrado"
-        );
-
+        server.getServer().send(404,"text/plain","chapa.png nao encontrado");
         return;
     }
 
-    server.getServer().streamFile(
-        file,
-        "image/png"
-    );
-
+    server.getServer().streamFile(file,"image/png" );
     file.close();
 }
 
@@ -77,38 +66,18 @@ void configure(ServerWebJr& server)
         !server.getServer().hasArg("password")
     ) {
 
-        server.getServer().send(
-            400,
-            "text/plain",
-            "Parametros incompletos"
-        );
-
+        server.getServer().send(400,"text/plain","Parametros incompletos");
         return;
     }
 
 
-    String typeNetWork =
-        server.getServer().arg("mode");
-
-    String SSID =
-        server.getServer().arg("ssid");
-
-    String password =
-        server.getServer().arg("password");
+    String typeNetWork = server.getServer().arg("mode");
+    String SSID = server.getServer().arg("ssid");
+    String password = server.getServer().arg("password");
+    String line = typeNetWork + "," + SSID + "," + password;
 
 
-    String line =
-        typeNetWork +
-        "," +
-        SSID +
-        "," +
-        password;
-
-
-    files.createFile(
-        nameDefaultConf.c_str(),
-        line.c_str()
-    );
+    files.createFile(nameDefaultConf.c_str(),line.c_str());
 
 
     isConfiguredYet = true;
@@ -136,9 +105,7 @@ IotJr::IotJr(
       buttonReset(buttonReset),
       ledInformation(ledInformation)
 {
-    msg =
-        "\n"
-        "-----------------------------------------------------------------------------\n";
+    msg = "\n -----------------------------------------------------------------------------\n";
 }
 
 
@@ -156,29 +123,18 @@ void IotJr::initiated()
 
         ledStartingConnectWifi();
 
-
         if (isFirstSetup()) {
 
-            msg +=
-                "-> This is the first connection and "
-                "let's create page config!\n";
-
-
+            msg += "-> This is the first connection and let's create page config!\n";
             wifi = WiFiJr(nameFirstSSID.c_str(), passwordDefault.c_str());
             if (wifi.createAccessPoint()) {
                 wifi.startDNS(nameDNS.c_str());
-                msg +=
-                    "-> The IP is...: " +
-                    wifi.getAccessPointIP() +
-                    "\n";
-
-
+                msg += "-> The IP is...: " + wifi.getAccessPointIP() + "\n";
                 createConfigFactory();
             }
         }
 
     } else {
-
         msg += "-> Not is possible mounting the system file!\n";
     }
 }
@@ -196,28 +152,12 @@ void IotJr::running(
     if (!mountingSystemFiles()) {
         return;
     }
-
-
-    String line =
-        files.readFile(
-            conf.c_str()
-        );
-
-
+    String line = files.readFile( conf.c_str());
     extractingData(line);
 
     wifi = WiFiJr( SSID.c_str(), password.c_str());
-
-    isConnected =
-        wifi.isConnected();
-
-
-    msg +=
-        "-> The system is running in mode..: [" +
-        typeNetWork +
-        "] using the network ..:[ " +
-        SSID +
-        "]";
+    isConnected = wifi.isConnected();
+    msg += "-> The system is running in mode..: [" + typeNetWork + "] using the network ..:[ " + SSID + "]";
 
 
     // ========================================================
@@ -228,30 +168,16 @@ void IotJr::running(
 
         if (wifi.createAccessPoint()) {
             wifi.startDNS(nameDNS.c_str());
-            msg +=
-                " with IP [" +
-                wifi.getAccessPointIP() +
-                "]\n";
-
-
-            server =
-                new ServerWebJr(80);
-
-
+            msg += " with IP [" + wifi.getAccessPointIP() + "]\n";
+            server = new ServerWebJr(80);
             for (int i = 0; i < quantidade; i++) {
 
                 server->addRoute(
                     routes[i].path,
                     routes[i].function
                 );
-            }
-
-
-            server->start(
-                "Servidor iniciado"
-            );
-
-
+            }s
+            server->start( "Servidor iniciado");
             isConnected = true;
 
         } else {
@@ -269,20 +195,8 @@ void IotJr::running(
 
         if (wifi.connect()) {
             wifi.startMDNS(nameDNS.c_str());
-            msg +=
-                " with IP [" +
-                wifi.getIPAddress() +
-                "]\n";
-
-
-            server =
-                new ServerWebJr(
-                    80,
-                    SSID.c_str(),
-                    password.c_str()
-                );
-
-
+            msg += " with IP [" + wifi.getIPAddress() + "]\n";
+            server = new ServerWebJr( 80, SSID.c_str(), password.c_str() );
             for (int i = 0; i < quantidade; i++) {
 
                 server->addRoute(
@@ -292,15 +206,10 @@ void IotJr::running(
             }
 
 
-            server->start(
-                "Servidor iniciado"
-            );
-
-
+            server->start( "Servidor iniciado");
             isConnected = true;
 
         } else {
-
             isConnected = false;
         }
     }
@@ -314,18 +223,9 @@ void IotJr::running(
 void IotJr::errorConnectWifi()
 {
     if (!isConnected) {
-
-        digitalWrite(
-            ledInformation,
-            LOW
-        );
-
+        digitalWrite( ledInformation, LOW );
     } else {
-
-        digitalWrite(
-            ledInformation,
-            HIGH
-        );
+        digitalWrite( ledInformation,HIGH);
     }
 }
 
@@ -336,27 +236,11 @@ void IotJr::errorConnectWifi()
 
 void IotJr::ledStartingConnectWifi()
 {
-    digitalWrite(
-        ledInformation,
-        LOW
-    );
-
-
+    digitalWrite(ledInformation, LOW);
     for (int i = 0; i < 5; i++) {
-
-        digitalWrite(
-            ledInformation,
-            LOW
-        );
-
+        digitalWrite( ledInformation,LOW);
         delay(1000);
-
-
-        digitalWrite(
-            ledInformation,
-            HIGH
-        );
-
+        digitalWrite( ledInformation, HIGH);
         delay(1000);
     }
 }
@@ -386,35 +270,11 @@ void IotJr::extractingData(
     String dados
 )
 {
-    int primeiraVirgula =
-        dados.indexOf(',');
-
-
-    int segundaVirgula =
-        dados.indexOf(
-            ',',
-            primeiraVirgula + 1
-        );
-
-
-    this->typeNetWork =
-        dados.substring(
-            0,
-            primeiraVirgula
-        );
-
-
-    this->SSID =
-        dados.substring(
-            primeiraVirgula + 1,
-            segundaVirgula
-        );
-
-
-    this->password =
-        dados.substring(
-            segundaVirgula + 1
-        );
+    int primeiraVirgula = dados.indexOf(',');
+    int segundaVirgula = dados.indexOf(',', primeiraVirgula + 1 );
+    this->typeNetWork = dados.substring(0, primeiraVirgula);
+    this->SSID = dados.substring( primeiraVirgula + 1, segundaVirgula);
+    this->password = dados.substring( segundaVirgula + 1);
 }
 
 
@@ -435,30 +295,10 @@ bool IotJr::mountingSystemFiles()
 void IotJr::createConfigFactory()
 {
     ServerWebJr serverFactory(80);
-
-    serverFactory.addRoute(
-        "/",
-        home
-    );
-
-
-    serverFactory.addRoute(
-        "/chapa.png",
-        chapa
-    );
-
-
-    serverFactory.addRoute(
-        "/configure",
-        configure
-    );
-
-
-    serverFactory.start(
-        "Servidor iniciado"
-    );
-
-
+    serverFactory.addRoute( "/", home);
+    serverFactory.addRoute( "/chapa.png", chapa);
+    serverFactory.addRoute("/configure", configure);
+    serverFactory.start( "Servidor iniciado");
     while (!isConfiguredYet) {
         wifi.handleDNS();
         serverFactory.getServer().handleClient();
@@ -474,30 +314,19 @@ void IotJr::createConfigFactory()
 
 bool IotJr::isFirstSetup()
 {
-    return !files.fileExists(
-        conf.c_str()
-    );
+    return !files.fileExists(conf.c_str());
 }
 
 
 // ============================================================
 // RESET
 // ============================================================
-
 void IotJr::checkPinAnd_Reset()
 {
     int value = digitalRead(buttonReset);
-
-
     if (value == LOW) {
-
         msg +=  "-> The button RESET is on and  now we are delete config\n";
-
         Serial.print(msg);
-
-
-        files.deleteFile(
-            conf.c_str()
-        );
+        files.deleteFile(conf.c_str());
     }
 }
