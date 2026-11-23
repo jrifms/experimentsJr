@@ -10,7 +10,7 @@ const String passwordDefault      = "12345678";
 const String typeNetWorkDefault   = "accesspoint";
 const String nameDefaultConf      = "/conf.txt";
 const String nameDNS              = "velhojack.local";
-bool isConfiguredYet              = false;
+const bool isConfiguredYet        = false;
 
 
 // ============================================================
@@ -68,11 +68,16 @@ void configure(ServerWebJr& server)
     String SSID = server.getServer().arg("ssid");
     String password = server.getServer().arg("password");
     String line = typeNetWork + "," + SSID + "," + password;
-
     files.createFile(nameDefaultConf.c_str(),line.c_str());
-    Serial.println("Creating new Network ...: "+ line);
+    //---------------------------------- mensage  -------------------------------------
+        if(DEBUG_MSG){
+            Serial.print("\n ---> We are receiver request configure ----- \n");
+            Serial.print("\n ---> We are alter this file ...:  "+nameDefaultConf+" \n");
+            Serial.println(" ---> With this line ...: " line );
+        }
+    //---------------------------------------------------------------------------------
 
-    isConfiguredYet = true;
+        isConfiguredYet = true;
     server.getServer().send(200, "text/plain", "Configuracao ok. Desligue e ligue [sem o reset] o dispositivo para o funcionamento!");
 }
 
@@ -90,7 +95,9 @@ IotJr::IotJr(
       buttonReset(buttonReset),
       ledInformation(ledInformation)
 {
-    msg = "\n -----------------------------------------------------------------------------\n";
+    if (DEBUG_MSG){
+        Serial.print("\n -----------------------------------------------------------------------------\n");
+    }
 }
 
 
@@ -101,15 +108,25 @@ IotJr::IotJr(
 void IotJr::initiated()
 {
     files.begin();
+
+    if(DEBUG_MSG){
+        Serial.println(" --------------- Initializing the Server --------------------------");
+
+    }
     checkPinAnd_Reset();
 
 
+    if(DEBUG_MSG){
+        Serial.println(" ---> We are mouting the system files ");
+    }
     if (mountingSystemFiles()) {
 
         ledStartingConnectWifi();
 
         if (isFirstSetup()) {
-            msg += "-> This is the first connection and let's create page config!\n";
+            if(DEBUG_MSG){
+                Serial.println(" ---> This is the first connection and let's create page config!");
+            }
             wifi = WiFiJr(nameFirstSSID.c_str(), passwordDefault.c_str());
             if (wifi.createAccessPoint()) {
                 wifi.startDNS(nameDNS.c_str());
@@ -307,10 +324,19 @@ bool IotJr::isFirstSetup()
 // ============================================================
 void IotJr::checkPinAnd_Reset()
 {
+    if (DEBUG_MSG){
+        Serial.println(" ----> Testing the button of reset is [On or Off] ");
+    }
+    
     int value = digitalRead(buttonReset);
     if (value == LOW) {
-        msg +=  "-> The button RESET is on and  now we are delete config\n";
-        Serial.print(msg);
+        if(DEBUG_MSG){
+           Serial.println(" ---> The button RESET is on and  now we are delete config");
+        }
+    
         files.deleteFile(conf.c_str());
+        if(DEBUG_MSG){
+            Serial.println(" ---> We are removing this file...: "+ conf);
+        }
     }
 }
