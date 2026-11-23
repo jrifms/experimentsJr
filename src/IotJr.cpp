@@ -8,7 +8,7 @@
 const String nameFirstSSID        = "ConfigureDeviceJR";
 const String passwordDefault      = "12345678";
 const String typeNetWorkDefault   = "accesspoint";
-const String nameDefaultConf      = "/conf.txt";
+const String nameDefaultConf      = "/configurateThis.txt";
 const String nameDNS              = "velhojack.local";
 
 bool isConfiguredYet = false;
@@ -108,7 +108,6 @@ void IotJr::initiated()
         ledStartingConnectWifi();
 
         if (isFirstSetup()) {
-
             msg += "-> This is the first connection and let's create page config!\n";
             wifi = WiFiJr(nameFirstSSID.c_str(), passwordDefault.c_str());
             if (wifi.createAccessPoint()) {
