@@ -71,6 +71,8 @@ void configure(ServerWebJr& server)
     String line = typeNetWork + "," + SSID + "," + password;
 
     files.createFile(nameDefaultConf.c_str(),line.c_str());
+    Serial.println("Creating new Networ ...: "+ line);
+    
     isConfiguredYet = true;
     server.getServer().send(200, "text/plain", "Configuracao ok. Desligue e ligue [sem o reset] o dispositivo para o funcionamento!");
 }
