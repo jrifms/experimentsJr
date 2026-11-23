@@ -160,7 +160,7 @@ void IotJr::running(
                     routes[i].path,
                     routes[i].function
                 );
-            }s
+            }
             server->start( "Servidor iniciado");
             isConnected = true;
 
