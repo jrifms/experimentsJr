@@ -8,10 +8,9 @@
 const String nameFirstSSID        = "ConfigureDeviceJR";
 const String passwordDefault      = "12345678";
 const String typeNetWorkDefault   = "accesspoint";
-const String nameDefaultConf      = "/configurateThis.txt";
+const String nameDefaultConf      = "/conf.txt";
 const String nameDNS              = "velhojack.local";
-
-bool isConfiguredYet = false;
+bool isConfiguredYet              = false;
 
 
 // ============================================================
@@ -71,8 +70,8 @@ void configure(ServerWebJr& server)
     String line = typeNetWork + "," + SSID + "," + password;
 
     files.createFile(nameDefaultConf.c_str(),line.c_str());
-    Serial.println("Creating new Networ ...: "+ line);
-    
+    Serial.println("Creating new Network ...: "+ line);
+
     isConfiguredYet = true;
     server.getServer().send(200, "text/plain", "Configuracao ok. Desligue e ligue [sem o reset] o dispositivo para o funcionamento!");
 }
