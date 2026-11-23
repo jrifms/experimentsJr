@@ -18,7 +18,7 @@ extern const String passwordDefault;
 extern const String typeNetWorkDefault;
 extern const String nameDefaultConf;
 extern const String nameDNS;
-extern const bool isConfiguredYet;
+extern bool isConfiguredYet;
 
     // ============================================================
     // Rotas
