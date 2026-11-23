@@ -17,12 +17,13 @@ extern const String passwordDefault;
 extern const String typeNetWorkDefault;
 extern const String nameDefaultConf;
 extern const String nameDNS;
+extern const isConfiguredYet;
 
-// ============================================================
-// Rotas
-// ============================================================
+    // ============================================================
+    // Rotas
+    // ============================================================
 
-typedef void (*RouteFunction)(ServerWebJr&);
+    typedef void (*RouteFunction)(ServerWebJr &);
 struct Route {
     const char* path;
     RouteFunction function;
