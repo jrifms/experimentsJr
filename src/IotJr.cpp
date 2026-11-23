@@ -73,7 +73,7 @@ void configure(ServerWebJr& server)
         if(DEBUG_MSG){
             Serial.print("\n ---> We are receiver request configure ----- \n");
             Serial.print("\n ---> We are alter this file ...:  "+nameDefaultConf+" \n");
-            Serial.println(" ---> With this line ...: " line );
+            Serial.println(" ---> With this line ...: " +line );
         }
     //---------------------------------------------------------------------------------
 
