@@ -23,13 +23,7 @@ void home(ServerWebJr& server)
     File file = SPIFFS.open("/home.html", "r");
 
     if (!file) {
-
-        server.getServer().send(
-            404,
-            "text/plain",
-            "home.html nao encontrado"
-        );
-
+        server.getServer().send(404, "text/plain", "home.html nao encontrado");
         return;
     }
 
@@ -37,11 +31,7 @@ void home(ServerWebJr& server)
 
     file.close();
 
-    server.getServer().send(
-        200,
-        "text/html",
-        html
-    );
+    server.getServer().send(200,"text/html",html);
 }
 
 // ============================================================
