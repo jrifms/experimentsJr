@@ -7,9 +7,9 @@
 
 const String nameFirstSSID        = "ConfigureDeviceJR";
 const String passwordDefault      = "12345678";
-const String typeNetWorkDefault = "accesspoint";
-const String nameDefaultConf     = "conf.txt";
-const String nameDNS                = "velhojack.local";
+const String typeNetWorkDefault   = "accesspoint";
+const String nameDefaultConf      = "/conf.txt";
+const String nameDNS              = "velhojack.local";
 
 bool isConfiguredYet = false;
 
@@ -21,12 +21,10 @@ bool isConfiguredYet = false;
 void home(ServerWebJr& server)
 {
     File file = SPIFFS.open("/home.html", "r");
-
     if (!file) {
         server.getServer().send(404, "text/plain", "home.html nao encontrado");
         return;
     }
-
     String html = file.readString();
     file.close();
     server.getServer().send(200,"text/html",html);
@@ -39,13 +37,11 @@ void home(ServerWebJr& server)
 void chapa(ServerWebJr& server)
 {
     File file = SPIFFS.open("/chapa.png", "r");
-
     if (!file) {
 
         server.getServer().send(404,"text/plain","chapa.png nao encontrado");
         return;
     }
-
     server.getServer().streamFile(file,"image/png" );
     file.close();
 }
@@ -69,26 +65,14 @@ void configure(ServerWebJr& server)
         server.getServer().send(400,"text/plain","Parametros incompletos");
         return;
     }
-
-
     String typeNetWork = server.getServer().arg("mode");
     String SSID = server.getServer().arg("ssid");
     String password = server.getServer().arg("password");
     String line = typeNetWork + "," + SSID + "," + password;
 
-
     files.createFile(nameDefaultConf.c_str(),line.c_str());
-
-
     isConfiguredYet = true;
-
-
-    server.getServer().send(
-        200,
-        "text/plain",
-        "Configuracao ok. Desligue e ligue "
-        "[sem o reset] o dispositivo para o funcionamento!"
-    );
+    server.getServer().send(200, "text/plain", "Configuracao ok. Desligue e ligue [sem o reset] o dispositivo para o funcionamento!");
 }
 
 
