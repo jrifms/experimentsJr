@@ -23,7 +23,6 @@ extern const String nameDNS;
 // ============================================================
 
 typedef void (*RouteFunction)(ServerWebJr&);
-
 struct Route {
     const char* path;
     RouteFunction function;
