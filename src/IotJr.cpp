@@ -10,7 +10,7 @@ const String passwordDefault      = "12345678";
 const String typeNetWorkDefault   = "accesspoint";
 const String nameDefaultConf      = "/conf.txt";
 const String nameDNS              = "velhojack.local";
-const bool isConfiguredYet        = false;
+bool isConfiguredYet        = false;
 
 
 // ============================================================
