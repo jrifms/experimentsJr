@@ -3,6 +3,7 @@
 
 
 #define DEBUG_MSG true
+#define NAME_DNS "velhojack.local"
 
 //Definição de pino de reset do dispositivo
 #ifndef PIN_RESET
