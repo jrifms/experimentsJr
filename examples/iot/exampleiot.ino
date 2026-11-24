@@ -1,20 +1,15 @@
-#include "IotJr.h"
-#include "constants.h"
-/*
-* Muito importante para resetar o dispositivo você deve conectar o GND com o pino reset [definido conforme a linha a baixo]
-* Acesse: velhojack.local
-*/
-// ----------------------- Definition of object for create a modem -------------------------------
-const int button_reset        = PIN_RESET;
-const int  led_information = LED_BUILTIN;
- IotJr modem(nameDefaultConf, button_reset, led_information);
-// -------------------------------------------------------------------------------------------------------
+#include "serverweb.h"
+#include "wifiJr.h"
+#include "manageFiles2.h"
+#include "IotJr2.h"
 
 // ----------------------- Functions for requering server web ------------------------------------
-void read(ServerWebJr& server) {
-	File file = SPIFFS.open("/read.html", "r");
-    if (!file) {
-        server.getServer().send(404,"text/plain","home.html nao encontrado");
+void read(ServerWebJr &server)
+{
+    File file = SPIFFS.open("/read.html", "r");
+    if (!file)
+    {
+        server.getServer().send(404, "text/plain", "home.html nao encontrado");
         return;
     }
 
@@ -23,7 +18,8 @@ void read(ServerWebJr& server) {
     server.getServer().send(200, "text/html", html);
 }
 
-void getSensors(ServerWebJr& server) {
+void getSensors(ServerWebJr &server)
+{
 
     delay(200);
     float temperatura = 24.6;
@@ -57,46 +53,30 @@ void getSensors(ServerWebJr& server) {
     server.getServer().send(
         200,
         "application/json",
-        json
-    );
+        json);
 }
 // -------------------------------------------------------------------------------------------------------
 
-void setup() {
+ServerIoT iot(PIN_RESET, LED_BUILTIN);
+void setup()
+{
 
     // ------------------------------- This lines is need ----------------------------------------------
-    pinMode(led_information, OUTPUT);
-    pinMode(button_reset, INPUT_PULLUP);
+    pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(PIN_RESET, INPUT_PULLUP);
     // ---------------------------------------------------------------------------------------------------
 
     Serial.begin(115200);
-    
-    //--------------------------- Create modem --------------------------------------------------
-    Serial.println(modem.msg);
-    modem.initiated(); // Create config if not exist
-    Serial.println(modem.msg);
+    delay(1500);
     Route routes[] = {
         {"/", read},
-        {"/sensors", getSensors},                        //10.9.35.242
+        {"/sensors", getSensors},
     };
-    modem.running(routes, 2);  // keep runing
-    Serial.println(modem.msg);
-    //-------------------------------------------------------------------------------------------------
-
+    iot.initiated(routes, 2);
 }
 
-void loop() {
-
-// ------------------------ This line is responsable for keeping the server -------------------
-   if(modem.typeNetWork == "accesspoint"){
-        modem.wifi.handleDNS();
-   }else{
-        modem.wifi.handleMDNS();
-   }
-    modem.server->getServer().handleClient();
-    modem.errorConnectWifi();
-// ---------------------------------------------------------------------------------------------------
-
-    Serial.println("Running !");
-    delay(500);
+void loop()
+{
+    iot.loop_();
+    delay(1000);
 }
