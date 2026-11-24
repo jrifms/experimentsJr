@@ -31,6 +31,7 @@ typedef enum networktype
 typedef struct data
 {
     networktype typeNet;
+    bool isConfigured;
     char ssid[500];
     char password[32];
     char dns[500];
@@ -48,7 +49,7 @@ public:
     bool fileExists();
     bool fileRemove();
     data getData();
-    void setData(String ssid, String password, String dns, networktype type);
+    void setData(String ssid, String password, String dns, bool isConfigured, networktype type);
     bool isFileMounted();
     
 private:
