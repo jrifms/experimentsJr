@@ -4,10 +4,10 @@
 FileOperation::FileOperation()
 {
     // Let's configurate the dat from connection
-    setData("ConfigureDeviceJR", "12345678", "velhojack.local", CONFIGURE);
+    setData("ConfigureDeviceJR", "12345678", "velhojack.local", false, CONFIGURE);
 
     // Let's catch the name of file
-    nameDefaultFile = "/conf.txt";
+    nameDefaultFile = NAME_FILE_CONFIGURATE;
 }
 
 bool FileOperation::fileWrite()
@@ -142,12 +142,13 @@ data FileOperation::getData()
     return this->dat;
 }
 
-void FileOperation::setData(String ssid, String password, String dns, networktype type)
+void FileOperation::setData(String ssid, String password, String dns, bool isConfigured, networktype type)
 {
     dat.typeNet = type;
     strcpy(dat.ssid, ssid.c_str());
     strcpy(dat.password, password.c_str());
     strcpy(dat.dns, dns.c_str());
+    dat.isConfigured = false;
 }
 
 bool FileOperation::isFileMounted()
