@@ -148,7 +148,7 @@ void FileOperation::setData(String ssid, String password, String dns, bool isCon
     strcpy(dat.ssid, ssid.c_str());
     strcpy(dat.password, password.c_str());
     strcpy(dat.dns, dns.c_str());
-    dat.isConfigured = false;
+    dat.isConfigured = isConfigured;
 }
 
 bool FileOperation::isFileMounted()
