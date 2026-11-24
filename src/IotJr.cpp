@@ -17,7 +17,7 @@ bool isConfiguredYet              = false;
 // HOME
 // ============================================================
 
-void home(ServerWebJr& server)
+void home2(ServerWebJr& server)
 {
     File file = SPIFFS.open("/home.html", "r");
     if (!file) {
@@ -33,7 +33,7 @@ void home(ServerWebJr& server)
 // CHAPA
 // ============================================================
 
-void chapa(ServerWebJr& server)
+void chapa2(ServerWebJr& server)
 {
     File file = SPIFFS.open("/chapa.png", "r");
     if (!file) {
@@ -50,7 +50,7 @@ void chapa(ServerWebJr& server)
 // CONFIGURE
 // ============================================================
 
-void configure(ServerWebJr& server)
+void configure2(ServerWebJr& server)
 {
     FilesJr files;
     files.begin();
