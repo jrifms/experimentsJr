@@ -10,20 +10,20 @@
 #define NAME_DEVICE_SEND_DATA "casa/esp32/distancia"
 #define PORT_MQTT 1883
 
-class HomeAssistant
-{
+// class HomeAssistant
+// {
 
-public:
+// public:
     
-    HomeAssistant();
-    void setup();
-    void connectMQTT();
-    void loop_();
-    void sendData(chat buffer[50]);
+//     HomeAssistant();
+//     void setup();
+//     void connectMQTT();
+//     void loop_();
+//     void sendData(chat buffer[50]);
 
-private:
-    WiFiClient espClient;
-    PubSubClient mqtt;
-};
+// private:
+//     WiFiClient espClient;
+//     PubSubClient mqtt;
+// };
 
 #endif
